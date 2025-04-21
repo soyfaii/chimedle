@@ -13,7 +13,7 @@
             <h1>chimedle</h1>
             <h2 style="margin-top: .5rem;">game #0</h2>
             <audio style="margin-top: 1rem; width: 100%;" id="audio" controls autoplay>
-                <source src="/resources/audio/game0.wav" type="audio/wave">
+                <source src="../resources/audio/game0.wav" type="audio/wave">
                 your browser does not support the audio element
             </audio>
             <div style="display: flex; gap: 1em; margin-top: 1em;">
@@ -31,7 +31,7 @@
             </div>
             <div style="margin-top: 1em; display: flex; gap: 1em;">
                 <a class="link-button" id="button-next">play next game</a>
-                <a class="link-button" href="/select/">play previous games</a>
+                <a class="link-button" href="../select/">play previous games</a>
             </div>
         </div>
     </div>
@@ -40,17 +40,17 @@
         const gameId = urlParams.get('id');
         if (!gameId) {
             alert("No game ID provided.");
-            window.location.href = "/select/";
+            window.location.href = "../select/";
         }
         var game = null;
         // Get the game
-        fetch("/resources/games.json")
+            fetch("../resources/games.json")
             .then(response => response.json())
             .then(data => {
                 game = data.find(g => g.id == gameId);
                 if (!game) {
                     alert("Game not found.");
-                    window.location.href = "/select/";
+                    window.location.href = "../select/";
                 } else {
                     applyGameToTemplate(game);
                 }
@@ -74,7 +74,7 @@
             const titleElement = document.querySelector("h2");
             titleElement.textContent = `game #${game.id}`;
             const audioElement = document.getElementById("audio");
-            audioElement.src = "/resources/audio/game" + game.id + ".wav";
+            audioElement.src = "../resources/audio/game" + game.id + ".wav";
             audioElement.load();
         }
 

@@ -15,11 +15,11 @@
             <ol style="list-style: none; margin-top: .5rem;">
                 <!-- list of games will be populated here -->
             </ol>
-            <a class="link-button" href="/" style="margin-top: 1em;">back</a>
+            <a class="link-button" href="../" style="margin-top: 1em;">back</a>
         </div>
     </div>
     <script>
-        const gamesFileLocation = "/resources/games.json";
+            const gamesFileLocation = "../resources/games.json";
         const gamesList = document.querySelector("ol");
         fetch(gamesFileLocation)
             .then(response => response.json())
