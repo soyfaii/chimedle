@@ -27,7 +27,7 @@
                 data.forEach(game => {
                     const li = document.createElement("li");
                     const a = document.createElement("a");
-                    a.href = `/game?id=${game.id}`;
+                    a.href = `../game?id=${game.id}`;
                     a.textContent = `game #${game.id}`;
                     a.style.color = "inherit";
                     li.appendChild(a);
