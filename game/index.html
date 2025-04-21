@@ -29,6 +29,9 @@
             <div style="margin-top: .5em;">
                 <p id="comment">what do you think it is?</p>
             </div>
+            <div id="answer-container" style="display: none;">
+                <p id="answer-label" style="font-size: x-large; margin-top: .5em;">Portal</p>
+            </div>
             <div style="margin-top: 1em; display: flex; gap: 1em;">
                 <a class="link-button" id="button-next">play next game</a>
                 <a class="link-button" href="../select/">play previous games</a>
@@ -145,6 +148,7 @@
             document.getElementById("time").disabled = true;
             document.getElementById("submit").disabled = true;
             tries++;
+            showAnswer();
         }
 
         function scoreGameCorrect() {
@@ -163,6 +167,7 @@
             }
             document.getElementById("guess").disabled = true;
             tries++;
+            showAnswer();
         }
 
         function scoreIncorrect() {
@@ -182,6 +187,7 @@
                 document.getElementById("time").disabled = true;
                 document.getElementById("submit").disabled = true;
                 gameState = "lost";
+                showAnswer();
             }
             tries++;
         }
@@ -211,6 +217,10 @@
                 }
             )();
         }
+            function showAnswer() {
+                document.getElementById("answer-container").style.display = "block";
+                document.getElementById("answer-label").textContent = game.game[0];
+            }
     </script>
 </body>
 
