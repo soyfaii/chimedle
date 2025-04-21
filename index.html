@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chimedle</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+    <div class="center">
+        <div class="app-box">
+            <h1>chimedle</h1>
+            <ul style="margin: 1em;">
+                <li>you'll hear a videogame sound effect.</li>
+                <li>guess which game (or series) the sound is from for one point.</li>
+                <li>guess when the sound appears in the game for an extra point.</li>
+                <li>you have 3 tries. after two fails, you'll get a hint.</li>
+                <li>you lose the chance for the extra point in the third try.</li>
+            </ul>
+            <div style="display: flex; gap: 1em;">
+                <a class="link-button" id="button-latest" href="game/">play latest game</a>
+                <a class="link-button" id="button-random" href="game/">play random game</a>
+                <a class="link-button" id="button-prev" href="select/">play previous games</a>
+            </div>
+            <a style="font-size: small; margin-top: 1em;" href="https://twitter.com/SoyFaii">made with ❤️ by lucas</a>
+        </div>
+    </div>
+    <script>
+        fetch("/resources/games.json")
+            .then(response => response.json())
+            .then(data => {
+                // Set the href for the latest game button
+                const latestGame = data[data.length - 1];
+                const latestGameLink = document.getElementById("button-latest");
+                latestGameLink.href = `game?id=${latestGame.id}`;
+                // Set the href for the random game button
+                const randomGameLink = document.getElementById("button-random");
+                const randomIndex = Math.floor(Math.random() * data.length);
+                const randomGame = data[randomIndex];
+                randomGameLink.href = `game?id=${randomGame.id}`;
+            })
+            .catch(error => console.error('Error fetching games:', error));
+    </script>
+</body>
+
+</html>

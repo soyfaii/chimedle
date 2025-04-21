@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>select game — chimedle</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <div class="center">
+        <div class="app-box">
+            <h1 style="margin: 0;">chimedle</h1>
+            <h2 style="margin-top: .5rem;">previous games</h2>
+            <ol style="list-style: none; margin-top: .5rem;">
+                <!-- list of games will be populated here -->
+            </ol>
+            <a class="link-button" href="/" style="margin-top: 1em;">back</a>
+        </div>
+    </div>
+    <script>
+        const gamesFileLocation = "/resources/games.json";
+        const gamesList = document.querySelector("ol");
+        fetch(gamesFileLocation)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(game => {
+                    const li = document.createElement("li");
+                    const a = document.createElement("a");
+                    a.href = `/game?id=${game.id}`;
+                    a.textContent = `game #${game.id}`;
+                    a.style.color = "inherit";
+                    li.appendChild(a);
+                    gamesList.appendChild(li);
+                });
+            })
+            .catch(error => console.error('error fetching games:', error));
+    </script>
+</body>
+
+</html>

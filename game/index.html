@@ -1,0 +1,217 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game #0 — chimedle</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <div class="center">
+        <div class="app-box">
+            <h1>chimedle</h1>
+            <h2 style="margin-top: .5rem;">game #0</h2>
+            <audio style="margin-top: 1rem; width: 100%;" id="audio" controls autoplay>
+                <source src="/resources/audio/game0.wav" type="audio/wave">
+                your browser does not support the audio element
+            </audio>
+            <div style="display: flex; gap: 1em; margin-top: 1em;">
+                <input type="text" id="guess" placeholder="game">
+                <input type="text" id="time" placeholder="★ during…, when…">
+                <button id="submit">guess</button>
+            </div>
+            <div style="font-family: monospace; font-size: 1.5em; margin-top: 1em;">
+                <span id="try1">▪</span>
+                <span id="try2">▪</span>
+                <span id="try3">▪</span>
+            </div>
+            <div style="margin-top: .5em;">
+                <p id="comment">what do you think it is?</p>
+            </div>
+            <div style="margin-top: 1em; display: flex; gap: 1em;">
+                <a class="link-button" id="button-next">play next game</a>
+                <a class="link-button" href="/select/">play previous games</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const gameId = urlParams.get('id');
+        if (!gameId) {
+            alert("No game ID provided.");
+            window.location.href = "/select/";
+        }
+        var game = null;
+        // Get the game
+        fetch("/resources/games.json")
+            .then(response => response.json())
+            .then(data => {
+                game = data.find(g => g.id == gameId);
+                if (!game) {
+                    alert("Game not found.");
+                    window.location.href = "/select/";
+                } else {
+                    applyGameToTemplate(game);
+                }
+                // Set the href for the next game button
+                const nextGameLink = document.getElementById("button-next");
+                const nextGameId = parseInt(gameId) + 1;
+                const nextGame = data.find(g => g.id == nextGameId);
+                if (nextGame) {
+                    nextGameLink.href = `?id=${nextGameId}`;
+                } else {
+                    nextGameLink.style.display = "none";
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching game:', error);
+                alert("Error fetching game.");
+            });
+
+        function applyGameToTemplate(game) {
+            document.title = `game #${game.id} — Chimedle`;
+            const titleElement = document.querySelector("h2");
+            titleElement.textContent = `game #${game.id}`;
+            const audioElement = document.getElementById("audio");
+            audioElement.src = "/resources/audio/game" + game.id + ".wav";
+            audioElement.load();
+        }
+
+        var tries = 0;
+        var maxTries = 3;
+        var gameState = "playing";
+
+        function checkGameGuess(guess) {
+            var result = false;
+            const possibleAnswers = game.game;
+            possibleAnswers.forEach(possibleAnswer => {
+                if (guess.toLowerCase() === possibleAnswer.toLowerCase()) {
+                    result = true;
+                }
+            });
+            return result;
+        }
+
+        function checkSoundGuess(guess) {
+            var result = false;
+            const possibleAnswers = game.sound;
+            possibleAnswers.forEach(possibleAnswer => {
+                console.log(guess);
+                console.log(possibleAnswer);
+                console.log(guess.toLowerCase().includes(possibleAnswer.toLowerCase()));
+                if (guess.toLowerCase().includes(possibleAnswer.toLowerCase())) {
+                    result = true;
+                }
+            });
+            return result;
+        }
+
+        const submitButton = document.getElementById("submit");
+        submitButton.addEventListener("click", function () {
+            const gameGuess = document.getElementById("guess").value;
+            const soundGuess = document.getElementById("time").value;
+            const try1 = document.getElementById("try1");
+            const try2 = document.getElementById("try2");
+            const try3 = document.getElementById("try3");
+
+            if (checkGameGuess(gameGuess)) {
+                if (checkSoundGuess(soundGuess)) {
+                    scoreAllCorrect();
+                } else {
+                    scoreGameCorrect();
+                }
+            } else {
+                scoreIncorrect();
+            }
+            resetComment();
+        });
+
+        function scoreAllCorrect() {
+            const try1 = document.getElementById("try1");
+            const try2 = document.getElementById("try2");
+            const try3 = document.getElementById("try3");
+
+            gameState = "guessedAll";
+
+            if (tries == 0) {
+                try1.textContent = "⭐️";
+            } else if (tries == 1) {
+                try2.textContent = "⭐️";
+            } else if (tries == 2) {
+                try3.textContent = "⭐️";
+            }
+            document.getElementById("guess").disabled = true;
+            document.getElementById("time").disabled = true;
+            document.getElementById("submit").disabled = true;
+            tries++;
+        }
+
+        function scoreGameCorrect() {
+            const try1 = document.getElementById("try1");
+            const try2 = document.getElementById("try2");
+            const try3 = document.getElementById("try3");
+
+            gameState = "guessedGame";
+
+            if (tries == 0) {
+                try1.textContent = "✅";
+            } else if (tries == 1) {
+                try2.textContent = "✅";
+            } else if (tries == 2) {
+                try3.textContent = "✅";
+            }
+            document.getElementById("guess").disabled = true;
+            tries++;
+        }
+
+        function scoreIncorrect() {
+            const try1 = document.getElementById("try1");
+            const try2 = document.getElementById("try2");
+            const try3 = document.getElementById("try3");
+
+            if (tries == 0) {
+                try1.textContent = "❌";
+            } else if (tries == 1) {
+                try2.textContent = "❌";
+                document.getElementById("time").value = `💡 ${game.sound[0]}`;
+                document.getElementById("time").disabled = true;
+            } else if (tries == 2) {
+                try3.textContent = "❌";
+                document.getElementById("guess").disabled = true;
+                document.getElementById("time").disabled = true;
+                document.getElementById("submit").disabled = true;
+                gameState = "lost";
+            }
+            tries++;
+        }
+        function resetComment() {
+            document.getElementById("comment").textContent = (
+                () => {
+                    if (gameState == "playing") {
+                        if (tries == 0) {
+                            return "what do you think it is?";
+                        } else if (tries == 1) {
+                            return "wrong! you have two tries left.";
+                        } else if (tries == 2) {
+                            return "nope! one try left!";
+                        }
+                        return "what do you think it is?";
+                    } else if (gameState == "guessedGame") {
+                        if (tries < 3) {
+                            return "you guessed the game! now try to go for the name of the sound!";
+                        } else {
+                            return "you guessed the game! no more tries left.";
+                        }
+                    } else if (gameState == "guessedAll") {
+                        return "you guessed everything! congratulations!";
+                    } else if (gameState == "lost") {
+                        return "nice try! the game was:";
+                    }
+                }
+            )();
+        }
+    </script>
+</body>
+
+</html>

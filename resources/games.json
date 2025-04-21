@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "game": [
+      "Rhythm Heaven Fever",
+      "rhythm heaven megamix",
+      "rhythm heaven groove",
+      "rhythm heaven",
+      "rh",
+      "rhythm paradise",
+      "rp",
+      "beat the beat",
+      "beat the beat rhythm paradise",
+      "rhythm paradise beat the beat",
+      "rhythm paradise megamix",
+      "rhythm paradise groove",
+      "rhythm tengoku",
+      "minna no rhythm tengoku",
+      "rhythm tengoku the best plus"
+    ],
+    "sound": [
+      "continue dialogue",
+      "tutorial",
+      "dialogue",
+      "press a",
+      "continue",
+      "confirm",
+      "select"
+    ]
+  },
+  {
+    "id": 2,
+    "game": ["Portal", "portal 2", "portal 1"],
+    "sound": ["during the elevator", "loading", "load", "elevator"]
+  },
+  {
+    "id": 3,
+    "game": ["The Binding of Isaac", "binding of isaac", "isaac"],
+    "sound": ["stats down", "stats go down", "lower", "down"]
+  },
+  {
+    "id": 4,
+    "game": ["Persona 5", "persona5", "p5"],
+    "sound": [
+      "candidate found",
+      "candidate was found",
+      "candidate has been found"
+    ]
+  },
+  {
+    "id": 5,
+    "game": ["Balatro"],
+    "sound": ["Mult goes up", "mult"]
+  },
+  {
+    "id": 6,
+    "game": [
+      "Animal Crossing: New Horizons",
+      "animal crossing new horizons",
+      "animal crossing",
+      "animal crossing new leaf",
+      "animal crossing: new leaf",
+      "acnh",
+      "ac",
+      "acnl"
+    ],
+    "sound": ["Loading", "saving", "load", "save"]
+  },
+  {
+    "id": 7,
+    "game": ["undertale"],
+    "sound": ["Spider Laugh", "spider"]
+  }
+]
