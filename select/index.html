@@ -18,24 +18,7 @@
             <a class="link-button" href="../" style="margin-top: 1em;">back</a>
         </div>
     </div>
-    <script>
-            const gamesFileLocation = "../resources/games.json";
-        const gamesList = document.querySelector("ol");
-        fetch(gamesFileLocation)
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(game => {
-                    const li = document.createElement("li");
-                    const a = document.createElement("a");
-                    a.href = `../game?id=${game.id}`;
-                    a.textContent = `game #${game.id}`;
-                    a.style.color = "inherit";
-                    li.appendChild(a);
-                    gamesList.appendChild(li);
-                });
-            })
-            .catch(error => console.error('error fetching games:', error));
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
