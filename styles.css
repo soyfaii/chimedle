@@ -68,3 +68,12 @@ input {
     min-width: 60vw;
   }
 }
+
+.games-grid {
+  display: grid; 
+  grid-template-columns: 1fr 1fr 1fr;
+  @media screen and (min-width: 450px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  } 
+  gap: 1em;
+}

@@ -7,8 +7,8 @@ fetch("../resources/games.json")
       const listItem = document.createElement("li");
       const link = document.createElement("a");
       link.href = `../game?id=${game.id}`;
-      link.textContent = `game #${game.id}`;
-      link.style.color = "inherit";
+      link.textContent = `#${game.id}`;
+      link.className = "link-button";
       listItem.appendChild(link);
       gamesList.appendChild(listItem);
     });
