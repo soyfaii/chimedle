@@ -41,6 +41,13 @@ button,
   cursor: pointer;
   text-decoration: none;
   text-align: center;
+  transition: background-color 0.2s ease;
+}
+button:hover, .link-button:hover {
+  background-color: light-dark(#202326, #dadbdd);
+}
+button:active, .link-button:active {
+  background-color: light-dark(#404346, #babbbd);
 }
 
 input {
