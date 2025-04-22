@@ -16,7 +16,6 @@ fetch("../resources/games.json")
   .then((data) => {
     game = data.find((g) => g.id == gameId);
     if (!game) {
-      alert("Game not found.");
       window.location.href = "../select/";
     } else {
       showGame(game);
