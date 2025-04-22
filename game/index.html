@@ -16,7 +16,7 @@
                 <source src="../resources/audio/game0.wav" type="audio/wave">
                 your browser does not support the audio element
             </audio>
-            <div style="display: flex; gap: 1em; margin-top: 1em;">
+            <div class="button-row" style="margin-top: 1em;">
                 <input type="text" id="guess" placeholder="game">
                 <input type="text" id="time" placeholder="★ during…, when…">
                 <button id="submit">guess</button>
@@ -26,13 +26,13 @@
                 <span id="try2">▪</span>
                 <span id="try3">▪</span>
             </div>
-            <div style="margin-top: .5em;">
+            <div style="margin-top: .5em; text-align: center;">
                 <p id="comment">what do you think it is?</p>
             </div>
             <div id="answer-container" style="display: none;">
                 <p id="answer-label" style="font-size: x-large; margin-top: .5em;">Portal</p>
             </div>
-            <div style="margin-top: 1em; display: flex; gap: 1em;">
+            <div class="button-row" style="margin-top: 1em;">
                 <a class="link-button" id="button-next">play next game</a>
                 <a class="link-button" href="../select/">play previous games</a>
             </div>

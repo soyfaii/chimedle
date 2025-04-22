@@ -40,6 +40,7 @@ button,
   border: none;
   cursor: pointer;
   text-decoration: none;
+  text-align: center;
 }
 
 input {
@@ -48,4 +49,15 @@ input {
   background-color: light-dark(#fafbfd, #000306);
   color: light-dark(#000306, #fafbfd);
   border: none;
+}
+
+.button-row {
+  display: flex;
+  gap: 1em;
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+    gap: 0.5em;
+    width: 100%;
+    min-width: 60vw;
+  }
 }
