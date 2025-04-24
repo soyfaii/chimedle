@@ -61,7 +61,10 @@ function checkSoundGuess(guess) {
     console.log(guess);
     console.log(possibleAnswer);
     console.log(guess.toLowerCase().includes(possibleAnswer.toLowerCase()));
-    if (guess.toLowerCase().includes(possibleAnswer.toLowerCase())) {
+    if (
+      guess.toLowerCase().includes(possibleAnswer.toLowerCase()) &&
+      !guess.startsWith("💡")
+    ) {
       result = true;
     }
   });
