@@ -53,7 +53,8 @@ button:active, .link-button:active {
 
 .level-button {
   width: 1em;
-  aspect-ratio: 1;
+  height: 1em;
+  display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
