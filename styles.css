@@ -45,9 +45,48 @@ button,
 }
 button:hover, .link-button:hover {
   background-color: light-dark(#202326, #dadbdd);
+  
 }
 button:active, .link-button:active {
   background-color: light-dark(#404346, #babbbd);
+}
+
+.level-button {
+  width: 1em;
+  aspect-ratio: 1;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.green-bg {
+  background-color: light-dark(#00b894, #55efc4);
+}
+button.green-bg:hover, .link-button.green-bg:hover {
+  background-color: light-dark(#20d8b4, #35cfa4);
+}
+button.green-bg:active, .link-button.green-bg:active {
+  background-color: light-dark(#40f8d4, #15af84);
+}
+.red-bg {
+  background-color: light-dark(#d63031, #ff7675);
+}
+button.red-bg:hover, .link-button.red-bg:hover {
+  background-color: light-dark(#ff3d4f, #ff6b81);
+}
+button.red-bg:active, .link-button.red-bg:active {
+  background-color: light-dark(#ff4f5e, #ff4d4f);
+}
+
+.button-star {
+  position: relative;
+}
+.button-star::after {
+  content: "⭐";
+  position: absolute;
+  display: block;
+  font-size: 1.5em;
+  top: -.5em;
+  right: -.25em;
 }
 
 input {
