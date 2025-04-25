@@ -24,7 +24,7 @@ body {
   padding: 2em;
   justify-content: center;
   align-items: center;
-  margin: auto;
+  margin: 1em;
   border-radius: 2em;
   background-color: light-dark(#eaebed, #101316);
   box-shadow: 0px 0px 100px 10px rgba(142, 68, 173, 0.5);
