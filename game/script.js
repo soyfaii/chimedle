@@ -1,6 +1,10 @@
+import LocalStorageManager from "../js/managers/LocalStorageManager.js";
+
 const gameId = new URLSearchParams(window.location.search).get("id");
 
 var game = null;
+
+const saveFile = LocalStorageManager.loadGameState(gameId);
 
 var tries = 0;
 var maxTries = 3;
@@ -28,6 +32,86 @@ fetch("../resources/games.json")
       nextGameLink.href = `?id=${nextGameId}`;
     } else {
       nextGameLink.style.display = "none";
+    }
+    // Load the saved game state (if any)
+    if (saveFile) {
+      const try1 = saveFile.try1;
+      const try2 = saveFile.try2;
+      const try3 = saveFile.try3;
+
+      // Set the displayed tries
+      [try1, try2, try3].forEach((tryResult, index) => {
+        const tryElement = document.getElementById(`try${index + 1}`);
+        if (tryResult === "guessedAll") {
+          tryElement.textContent = "⭐️";
+        } else if (tryResult === "guessedGame") {
+          tryElement.textContent = "✅";
+        } else if (tryResult === "failed") {
+          tryElement.textContent = "❌";
+        }
+      });
+
+      // Set game state
+      if (
+        try1 == "guessedAll" ||
+        try2 == "guessedAll" ||
+        try3 == "guessedAll"
+      ) {
+        gameState = "guessedAll";
+      } else if (
+        try1 == "guessedGame" ||
+        try2 == "guessedGame" ||
+        try3 == "guessedGame"
+      ) {
+        gameState = "guessedGame";
+      } else if (try3 == "failed") {
+        gameState = "lost";
+      } else {
+        gameState = "playing";
+      }
+
+      // Set the tries
+      [try1, try2, try3].forEach((tryResult) => {
+        if (
+          tryResult == "guessedAll" ||
+          tryResult == "guessedGame" ||
+          tryResult == "failed"
+        ) {
+          tries++;
+        }
+      });
+
+      // Refill and disable form inputs if game is over or they were guessed
+      if (gameState == "guessedAll") {
+        document.getElementById("guess").value = game.game[0];
+        document.getElementById("time").value = game.sound[0];
+        document.getElementById("guess").disabled = true;
+        document.getElementById("time").disabled = true;
+        document.getElementById("submit").disabled = true;
+      } else if (gameState == "guessedGame") {
+        document.getElementById("guess").value = game.game[0];
+        document.getElementById("guess").disabled = true;
+        if (tries > 2) {
+          document.getElementById("time").value = `💡 ${game.sound[0]}`;
+          document.getElementById("time").disabled = true;
+          document.getElementById("submit").disabled = true;
+        }
+      } else if (gameState == "lost") {
+        document.getElementById("guess").disabled = true;
+        document.getElementById("time").disabled = true;
+        document.getElementById("submit").disabled = true;
+        document.getElementById("time").value = `💡 ${game.sound[0]}`;
+      }
+
+      // Set comment and answer display
+      refreshComment();
+      if (
+        gameState == "guessedAll" ||
+        gameState == "guessedGame" ||
+        gameState == "lost"
+      ) {
+        showAnswer();
+      }
     }
   })
   .catch((error) => {
@@ -86,6 +170,7 @@ submitButton.addEventListener("click", function () {
     scoreIncorrect();
   }
   refreshComment();
+  saveGame();
 });
 
 function scoreAllCorrect() {
@@ -178,4 +263,37 @@ function refreshComment() {
 function showAnswer() {
   document.getElementById("answer-container").style.display = "block";
   document.getElementById("answer-label").textContent = game.game[0];
+}
+
+function saveGame() {
+  const try1Element = document.getElementById("try1").textContent;
+  const try2Element = document.getElementById("try2").textContent;
+  const try3Element = document.getElementById("try3").textContent;
+
+  const try1 =
+    try1Element === "⭐️"
+      ? "guessedAll"
+      : try1Element === "✅"
+      ? "guessedGame"
+      : try1Element === "❌"
+      ? "failed"
+      : null;
+  const try2 =
+    try2Element === "⭐️"
+      ? "guessedAll"
+      : try2Element === "✅"
+      ? "guessedGame"
+      : try2Element === "❌"
+      ? "failed"
+      : null;
+  const try3 =
+    try3Element === "⭐️"
+      ? "guessedAll"
+      : try3Element === "✅"
+      ? "guessedGame"
+      : try3Element === "❌"
+      ? "failed"
+      : null;
+
+  LocalStorageManager.saveGameState(gameId, try1, try2, try3);
 }
